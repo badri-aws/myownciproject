@@ -1,5 +1,6 @@
 
-pipeline {
+pipeline 
+{
     agent any
     tools {
         maven "MAVEN3"
@@ -20,7 +21,8 @@ pipeline {
          SONARSCANNER = 'sonarscanner'
     }
 
-    stages {
+    stages 
+    {
         stage('Build') {
             steps {
                sh 'mvn clean install -U -DskipTests -Dmaven.repo.local=~/.m2/repository'
@@ -60,15 +62,19 @@ pipeline {
             }
           }
     }
-        stage ('Quality Gate') {
-            steps {
+        stage ('Quality Gate') 
+        {
+            steps 
+            {
                 timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true 
             }
             }
         } 
-        stage ('uploadArtifact') {
-            steps {
+        stage ('uploadArtifact') 
+        {
+            steps 
+            {
                 nexusArtifactUploader(
                 nexusVersion: 'nexus3',
                 protocol: 'http',
@@ -86,8 +92,5 @@ pipeline {
                 )
             }
         }
-
-      }
-
-}
+    }
 }
